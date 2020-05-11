@@ -6,7 +6,6 @@ module.exports = {
     async registerController(req, res){
         try {
             const result =await User.create({
-                id: req.body.id,
                 userName: req.body.userName,
                 email: req.body.email,
                 password: req.body.password
