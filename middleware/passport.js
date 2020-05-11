@@ -9,23 +9,15 @@ module.exports = (passport) => {
     let opts = {}
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt')
     opts.secretOrKey = secret ;
-    passport.use(new JwtStrategy(opts,async (jwt_payload, done) => {  
-        console.log(jwt_payload);
-        
-        await User.findOne({
+    passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
+        User.findOne({
             where:{email: jwt_payload.email}
-        }, (error, user) => {
-
-            if (error) {
-                return done(error, false)
-            }
+        }).then((user) => {
             if (user) {
-                console.log(user);
-                
                 done(null, user)
             } else {
                 done(null, false)
             }
-        })        
+        })           
     }))
 }
