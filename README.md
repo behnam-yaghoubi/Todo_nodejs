@@ -1,4 +1,4 @@
 # behnam.yaghoubi
 
-# run command 
-#   npm test
+ run command 
+       npm test
