@@ -41,7 +41,8 @@ module.exports = {
                                 return  res.status(200).json({
                                     success: true,
                                     token: `jwt ${token}`,
-                                    msg : 'شما با موفقیت وارد شدید.'
+                                    msg : 'شما با موفقیت وارد شدید.',
+                                    redirect:'/Todo'
                                 })
                             }else{
                                 res.status(401).send({
