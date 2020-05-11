@@ -8,11 +8,15 @@ const Todo = sequelize.define('Todo',{
         type: DataTypes.INTEGER,
         // field:'id'
     },
+    userId:{
+        
+    },
     todoName:{
         type: DataTypes.STRING,
     },
     done:{
-        type: DataTypes.ENUM('done', 'doing', 'incomplete'),
+        type: DataTypes.ENUM,
+        values:['done', 'doing', 'incomplete'],
         defaultValue: 'incomplete'
     }
 })
