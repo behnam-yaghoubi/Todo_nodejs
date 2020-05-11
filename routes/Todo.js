@@ -1,20 +1,33 @@
 const express = require('express');
 const router = express.Router();
 
+const passport = require('passport');
+require('../middleware/passport')(passport)
 
-router.post('/Todo',(req, res)=>{    
+const todoController = require('../controller/todoController');
+
+
+router.post('/Todo',passport.authenticate('jwt', { 
+    session: false
+}),(req, res)=>{    
     res.send('ok')
 });
 
-router.get('/Todo',(req, res)=>{
+router.get('/Todo',passport.authenticate('jwt', { 
+    session: false
+}),(req, res)=>{
     res.send('get all')
 })
 
-router.put('/Todo',(req, res)=>{
+router.put('/Todo',passport.authenticate('jwt', { 
+    session: false
+}),(req, res)=>{
     res.send('edit todo')
 })
 
-router.delete('/Todo',(req, res)=>{
+router.delete('/Todo',passport.authenticate('jwt', { 
+    session: false
+}),(req, res)=>{
     res.send('delete todo')
 })
 
