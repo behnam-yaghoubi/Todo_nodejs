@@ -20,7 +20,6 @@ module.exports = {
     },
     async loginController(req, res){
         try {
-            console.log(req.body);
             const user = await User.findOne({
                 where:{
                     email: req.body.email
