@@ -35,13 +35,8 @@ export default {
             const token = jwt.sign(user.toJSON(), JWT_SECRET, {
               expiresIn: "1h",
             });
-            loginHandle(
-              res,
-              "success",
-              `jwt${token}`,
-              Msg.loginSuccess,
-              "/Todo"
-            );
+            let Token = `jwt ${token}`;
+            loginHandle(res, "success", Token, Msg.loginSuccess, "/Todo");
           } else {
             loginHandle(res, "error", "", Msg.passwordIncorrect, "/login");
           }
