@@ -1,23 +1,41 @@
+import passport from "passport";
+// import LocalStrategy from "passport-local";
+import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
+import { User } from "../models/UserModel";
+import { JWT_SECRET } from "../config/constants";
 
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
+// const localStrategy = new LocalStrategy(async (username, password, done) => {
+//   try {
+//     const user = await User.findOne({ username });
+//     if (!user) {
+//       return done(null, false);
+//     } else if (!user._comparePassword(password)) {
+//       return done(null, false);
+//     }
+//     return done(null, user);
+//   } catch (error) {
+//     return done(null, false);
+//   }
+// });
 
-const User = require('../models/UserModel');
-const {secret} = require('../config/config');
+const JWTOpts = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
+  secretOrKey: JWT_SECRET,
+};
 
-module.exports = (passport) => {
-    let opts = {}
-    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt')
-    opts.secretOrKey = secret ;
-    passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
-        User.findOne({
-            where:{email: jwt_payload.email}
-        }).then((user) => {
-            if (user) {
-                done(null, user)
-            } else {
-                done(null, false)
-            }
-        })           
-    }))
-}
+const jwtStrategy = new JWTStrategy(JWTOpts, async (jwt_payload, done) => {
+  try {
+    const user = await User.findOne({
+      where: { email: jwt_payload.email },
+    });
+    return done(null, user);
+  } catch (error) {
+    return done(null, false);
+  }
+});
+
+// passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+// export const localAuth = passport.authenticate("local", { session: false });
+export const jwtAuth = passport.authenticate("jwt", { session: false });

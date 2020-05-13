@@ -1,7 +1,5 @@
-const User = require("../models/UserModel");
-const Todo = require("../models/TodoModel");
-
-module.exports = {
+import { Todo } from "../models/TodoModel";
+export default {
   async addTodo(req, res) {
     try {
       const { todoName } = req.body;

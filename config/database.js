@@ -1,8 +1,13 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('test', 'postgres', 'behnam',{
-    host: 'localhost',
-    dialect:'postgres'
-})
-sequelize.sync({ force: false});
+import { DATABASE } from "./constants";
+import { Sequelize } from "sequelize";
 
-module.exports = {sequelize,DataTypes};
+export const sequelize = new Sequelize(
+  DATABASE.DB_NAME,
+  DATABASE.DB_USERNAME,
+  DATABASE.DB_PASSWORD,
+  {
+    host: DATABASE.DB_URL,
+    dialect: DATABASE.DB_DIALECT,
+  }
+);
+sequelize.sync({ force: false });

@@ -1,49 +1,22 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
+import { jwtAuth } from "../middleware/passport";
+import todoController from "../controller/todoController";
 
-const passport = require("passport");
-require("../middleware/passport")(passport);
+router.post("/Todo", jwtAuth, (req, res) => {
+  todoController.addTodo(req, res);
+});
 
-const todoController = require("../controller/todoController");
+router.get("/Todo", jwtAuth, (req, res) => {
+  todoController.getAllTodo(req, res);
+});
 
-router.post(
-  "/Todo",
-  passport.authenticate("jwt", {
-    session: false,
-  }),
-  (req, res) => {
-    todoController.addTodo(req, res);
-  }
-);
+router.put("/Todo", jwtAuth, (req, res) => {
+  todoController.editTodo(req, res);
+});
 
-router.get(
-  "/Todo",
-  passport.authenticate("jwt", {
-    session: false,
-  }),
-  (req, res) => {
-    todoController.getAllTodo(req, res);
-  }
-);
+router.delete("/Todo", jwtAuth, (req, res) => {
+  todoController.deleteTodo(req, res);
+});
 
-router.put(
-  "/Todo",
-  passport.authenticate("jwt", {
-    session: false,
-  }),
-  (req, res) => {
-    todoController.editTodo(req, res);
-  }
-);
-
-router.delete(
-  "/Todo",
-  passport.authenticate("jwt", {
-    session: false,
-  }),
-  (req, res) => {
-    todoController.deleteTodo(req, res);
-  }
-);
-
-module.exports = router;
+export default router;

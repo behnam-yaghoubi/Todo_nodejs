@@ -1,5 +1,6 @@
-const { sequelize, DataTypes } = require("../config/database");
-const Todo = sequelize.define("Todo", {
+import { DataTypes } from "sequelize";
+import { sequelize } from "../config/database";
+export const Todo = sequelize.define("Todo", {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -27,4 +28,3 @@ const Todo = sequelize.define("Todo", {
 Todo.associate = (models) => {
   User.hasMany(models.Todo, { foreignKey: "userId" });
 };
-module.exports = Todo;

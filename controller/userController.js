@@ -1,8 +1,8 @@
-const User = require("../models/UserModel");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const config = require("../config/config");
-module.exports = {
+import { User } from "../models/UserModel";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { JWT_SECRET } from "../config/constants";
+export default {
   async registerController(req, res) {
     try {
       const { userName, email, password } = req.body;
@@ -41,7 +41,7 @@ module.exports = {
         await bcrypt.compare(password, user.password, (err, isMatch) => {
           if (isMatch && !err) {
             let userEmail = user.email;
-            const token = jwt.sign(user.toJSON(), config.secret, {
+            const token = jwt.sign(user.toJSON(), JWT_SECRET, {
               expiresIn: "1h",
             });
             return res.status(200).send({
