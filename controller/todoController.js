@@ -1,10 +1,12 @@
 import { Todo } from "../models/TodoModel";
+import { successHandle, catchError } from "../utils";
+import { Msg } from "../config/constants";
+
 export default {
   async addTodo(req, res) {
     try {
       const { todoName } = req.body;
       const { id } = req.user;
-
       const result = await Todo.findOrCreate({
         where: {
           todoName,
@@ -13,22 +15,12 @@ export default {
       });
       let find = result[0]._options.isNewRecord;
       if (!find) {
-        return res.status(200).send({
-          success: true,
-          msg: "این فعالیت قبلا وارد شده است",
-          result: {},
-        });
+        successHandle(res, 409, "error", Msg.duplicate, {});
       } else {
-        return res.status(201).send({
-          success: true,
-          msg: "فعالیت با موفقیت افزوده شد",
-          result: result[0],
-        });
+        successHandle(res, 201, "success", Msg.success, result[0]);
       }
     } catch (error) {
-      res.status(500).send({
-        error: `An error has occured ${error}`,
-      });
+      catchError(res, error);
     }
   },
   async editTodo(req, res) {

@@ -13,8 +13,8 @@ export const loginHandle = (res, status, token, msg, redirect) => {
   });
 };
 
-export const successHandle = (res, status, msg, result) => {
-  res.status(201).send({
+export const successHandle = (res, statusCode, status, msg, result) => {
+  res.status(statusCode).send({
     status,
     msg,
     result,

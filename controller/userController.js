@@ -2,7 +2,7 @@ import { User } from "../models/UserModel";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET, Msg } from "../config/constants";
-import { catchError, loginHandle } from "../utils";
+import { catchError, loginHandle, successHandle } from "../utils";
 
 export default {
   async registerController(req, res) {
@@ -13,7 +13,7 @@ export default {
         email,
         password,
       });
-      successHandle(res, "success", Msg.Register, result);
+      successHandle(res, 201, "success", Msg.Register, result);
     } catch (error) {
       catchError(res, error);
     }

@@ -11,4 +11,6 @@ export const Msg = {
   loginUserNotFound: "کاربری با این مشخصات وجود ندارد",
   loginSuccess: "شما با موفقیت وارد شدید.",
   passwordIncorrect: "پسورد اشتباه است",
+  duplicate: "اطلاعات وارد شده تکراری است",
+  success: "درخواست شما با موفقیت انجام شد",
 };
