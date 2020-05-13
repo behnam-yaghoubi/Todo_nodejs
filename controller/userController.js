@@ -1,7 +1,9 @@
 import { User } from "../models/UserModel";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../config/constants";
+import { JWT_SECRET, Msg } from "../config/constants";
+import { catchError, loginHandle } from "../utils";
+
 export default {
   async registerController(req, res) {
     try {
@@ -11,15 +13,9 @@ export default {
         email,
         password,
       });
-      res.status(201).send({
-        status: "success",
-        msg: "ثبت نام شما انجام شد",
-        result,
-      });
+      successHandle(res, "success", Msg.Register, result);
     } catch (error) {
-      res.status(500).send({
-        error: `An error has occured ${error}`,
-      });
+      catchError(res, error);
     }
   },
   async loginController(req, res) {
@@ -31,12 +27,7 @@ export default {
         },
       });
       if (!user) {
-        return res.status(401).send({
-          status: "error",
-          token: {},
-          msg: "کاربری با این مشخصات وجود ندارد",
-          redirect: "/login",
-        });
+        loginHandle(res, "error", "", Msg.loginUserNotFound, "/login");
       } else {
         await bcrypt.compare(password, user.password, (err, isMatch) => {
           if (isMatch && !err) {
@@ -44,26 +35,20 @@ export default {
             const token = jwt.sign(user.toJSON(), JWT_SECRET, {
               expiresIn: "1h",
             });
-            return res.status(200).send({
-              status: "success",
-              token: `jwt ${token}`,
-              msg: "شما با موفقیت وارد شدید.",
-              redirect: "/Todo",
-            });
+            loginHandle(
+              res,
+              "success",
+              `jwt${token}`,
+              Msg.loginSuccess,
+              "/Todo"
+            );
           } else {
-            res.status(401).send({
-              status: "error",
-              token: {},
-              msg: "پسورد اشتباه است",
-              redirect: "/login",
-            });
+            loginHandle(res, "error", "", Msg.passwordIncorrect, "/login");
           }
         });
       }
     } catch (error) {
-      res.status(500).send({
-        error: `An error has occured ${error}`,
-      });
+      catchError(res, error);
     }
   },
 };
