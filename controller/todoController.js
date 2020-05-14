@@ -33,68 +33,50 @@ export default {
           returning: true,
         }
       );
-      if (code === 0) {
-        return res.status(400).send({
-          success: "error",
-          msg: "درخواست شما پاسخی ندارد",
-          result,
-        });
+      if (code === 0 || todoName === undefined || Condition === undefined) {
+        successHandle(res, 400, "error", Msg.error, {});
+      } else {
+        successHandle(res, 200, "success", Msg.success, result[0]);
       }
-      res.status(200).send({
-        status: "success",
-        msg: "درخواست شما با موفقیت انجام شد",
-        result,
-      });
     } catch (error) {
-      res.status(500).send({
-        error: `An error has occured ${error}`,
-      });
+      catchError(res, error);
     }
   },
   async deleteTodo(req, res) {
     try {
       const { id } = req.query;
-      await Todo.destroy({
+      const result = await Todo.destroy({
         where: {
           id,
         },
       });
-      res.ststus(200).send({
-        status: "success",
-        msg: "درخواست با موفقیت انجام شد",
-      });
+      if (result === 0) {
+        successHandle(res, 401, "error", Msg.error, {});
+      } else {
+        successHandle(res, 200, "success", Msg.success, {});
+      }
     } catch (error) {
-      res.status(500).send({
-        error: `An error has occured ${error}`,
-      });
+      catchError(res, error);
     }
   },
   async getAllTodo(req, res) {
     try {
       const { page } = req.query;
-      const result = await Todo.findAll({
+      const result = await Todo.findAndCountAll({
         limit: 4,
         offset: (page - 1) * 4,
         where: {
           userId: req.user.id,
         },
       });
-      if (!result) {
-        return res.status().send({
-          status: "error",
-          msg: "اطلاعاتی یافت نشد",
-          result,
-        });
+
+      if (result.count === 0) {
+        successHandle(res, 200, "error", Msg.error, result);
+      } else {
+        successHandle(res, 200, "success", Msg.success, result);
       }
-      res.status(200).send({
-        status: "success",
-        msg: "لیست تمام فعالیت ها",
-        result,
-      });
     } catch (error) {
-      res.status(500).send({
-        error: `An error has occured ${error}`,
-      });
+      catchError(res, error);
     }
   },
 };

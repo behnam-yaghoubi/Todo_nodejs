@@ -27,7 +27,7 @@ export default {
         },
       });
       if (!user) {
-        loginHandle(res, "error", "", Msg.loginUserNotFound, "/login");
+        loginHandle(res, 400, "error", "", Msg.loginUserNotFound, "/login");
       } else {
         await bcrypt.compare(password, user.password, (err, isMatch) => {
           if (isMatch && !err) {
@@ -36,9 +36,9 @@ export default {
               expiresIn: "1h",
             });
             let Token = `jwt ${token}`;
-            loginHandle(res, "success", Token, Msg.loginSuccess, "/Todo");
+            loginHandle(res, 200, "success", Token, Msg.loginSuccess, "/Todo");
           } else {
-            loginHandle(res, "error", "", Msg.passwordIncorrect, "/login");
+            loginHandle(res, 400, "error", "", Msg.passwordIncorrect, "/login");
           }
         });
       }
