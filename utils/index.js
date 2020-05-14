@@ -4,8 +4,8 @@ export const catchError = (res, error) => {
   });
 };
 
-export const loginHandle = (res, status, token, msg, redirect) => {
-  return res.status(401).send({
+export const loginHandle = (res, statusCode, status, token, msg, redirect) => {
+  return res.status(statusCode).send({
     status,
     token,
     msg,
@@ -14,7 +14,7 @@ export const loginHandle = (res, status, token, msg, redirect) => {
 };
 
 export const successHandle = (res, statusCode, status, msg, result) => {
-  res.status(statusCode).send({
+  return res.status(statusCode).send({
     status,
     msg,
     result,
