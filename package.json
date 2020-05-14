@@ -2,10 +2,10 @@
   "name": "todo-app",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "test": "nodemon server.js",
-    "start": "nodemon --exec babel-node server.js"
+    "test": "nodemon index.js",
+    "start": "nodemon --exec babel-node index.js"
   },
   "author": "behnam yaghoubi",
   "license": "ISC",
