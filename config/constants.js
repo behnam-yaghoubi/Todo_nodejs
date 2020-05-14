@@ -13,4 +13,5 @@ export const Msg = {
   passwordIncorrect: "پسورد اشتباه است",
   duplicate: "اطلاعات وارد شده تکراری است",
   success: "درخواست شما با موفقیت انجام شد",
+  error: "درخواست شما پاسخی ندارد",
 };
