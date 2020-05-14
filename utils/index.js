@@ -14,7 +14,7 @@ export const loginHandle = (res, statusCode, status, token, msg, redirect) => {
 };
 
 export const successHandle = (res, statusCode, status, msg, result) => {
-  return res.status(statusCode).send({
+  res.status(statusCode).send({
     status,
     msg,
     result,

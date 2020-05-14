@@ -15,10 +15,9 @@ export default {
       });
       let find = result[0]._options.isNewRecord;
       if (!find) {
-        successHandle(res, 409, "error", Msg.duplicate, {});
-      } else {
-        successHandle(res, 201, "success", Msg.success, result[0]);
+        return successHandle(res, 409, "error", Msg.duplicate, {});
       }
+      successHandle(res, 201, "success", Msg.success, result[0]);
     } catch (error) {
       catchError(res, error);
     }
@@ -34,10 +33,9 @@ export default {
         }
       );
       if (code === 0 || todoName === undefined || Condition === undefined) {
-        successHandle(res, 400, "error", Msg.error, {});
-      } else {
-        successHandle(res, 200, "success", Msg.success, result[0]);
+        return successHandle(res, 400, "error", Msg.error, {});
       }
+      successHandle(res, 200, "success", Msg.success, result[0]);
     } catch (error) {
       catchError(res, error);
     }
@@ -51,10 +49,9 @@ export default {
         },
       });
       if (result === 0) {
-        successHandle(res, 401, "error", Msg.error, {});
-      } else {
-        successHandle(res, 200, "success", Msg.success, {});
+        return successHandle(res, 401, "error", Msg.error, {});
       }
+      successHandle(res, 200, "success", Msg.success, {});
     } catch (error) {
       catchError(res, error);
     }
@@ -71,10 +68,9 @@ export default {
       });
 
       if (result.count === 0) {
-        successHandle(res, 200, "error", Msg.error, result);
-      } else {
-        successHandle(res, 200, "success", Msg.success, result);
+        return successHandle(res, 200, "error", Msg.error, result);
       }
+      successHandle(res, 200, "success", Msg.success, result);
     } catch (error) {
       catchError(res, error);
     }

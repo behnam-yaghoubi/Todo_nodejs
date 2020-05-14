@@ -10,10 +10,10 @@ export const Todo = sequelize.define("Todo", {
   },
   userId: {
     type: DataTypes.INTEGER,
-    references: {
-      model: "user",
-      key: "id",
-    },
+    // references: {
+    //   model: "user",
+    //   key: "id",
+    // },
   },
   todoName: {
     type: DataTypes.STRING,
@@ -27,4 +27,5 @@ export const Todo = sequelize.define("Todo", {
 });
 Todo.associate = (models) => {
   User.hasMany(models.Todo, { foreignKey: "userId" });
+  Todo.belongsTo(models.User, { foreignKey: "userId" });
 };

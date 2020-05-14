@@ -8,6 +8,14 @@ export default {
   async registerController(req, res) {
     try {
       const { userName, email, password } = req.body;
+      const alreadyExistUser = await User.findOne({
+        where: {
+          email,
+        },
+      });
+      if (alreadyExistUser) {
+        return successHandle(res, 401, "error", Msg.duplicate);
+      }
       const result = await User.create({
         userName,
         email,

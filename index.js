@@ -4,7 +4,7 @@ import logger from "morgan";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 
-import router from "./routes/index"; // import master router
+import Router from "./routes/index"; // import master router
 
 const app = express();
 
@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(passport.initialize());
 
-app.use("/", router);
+app.use("/", Router);
 
 app.listen(3000, function () {
   console.log("listening on 3000");
