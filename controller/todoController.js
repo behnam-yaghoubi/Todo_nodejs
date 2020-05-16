@@ -1,5 +1,6 @@
 import { Todo } from "../models/TodoModel";
 import { successHandle, catchError } from "../utils";
+import { addTodo, editTodo } from "../utils/joiValidate";
 import { Msg } from "../config/constants";
 
 export default {
@@ -7,6 +8,10 @@ export default {
     try {
       const { todoName } = req.body;
       const { id } = req.user;
+      const { error } = addTodo(req.body);
+      if (error) {
+        return successHandle(res, 409, "error", error.details, {});
+      }
       const result = await Todo.findOrCreate({
         where: {
           todoName,
@@ -25,6 +30,10 @@ export default {
   async editTodo(req, res) {
     try {
       const { id, todoName, Condition } = req.body;
+      const { error } = editTodo(req.body);
+      if (error) {
+        return successHandle(res, 400, "error", error.details, {});
+      }
       const [code, result] = await Todo.update(
         { todoName, Condition },
         {

@@ -8,9 +8,11 @@ export const DATABASE = {
 };
 export const Msg = {
   Register: "ثبت نام شما با موفقیت انجام شد",
-  loginUserNotFound: "کاربری با این مشخصات وجود ندارد",
-  loginSuccess: "شما با موفقیت وارد شدید.",
-  passwordIncorrect: "پسورد اشتباه است",
+  loginUserNotFound: [
+    { message: "کاربری با این مشخصات وجود ندارد", path: ["email"] },
+  ],
+  loginSuccess: [{ message: "شما با موفقیت وارد شدید.", path: ["success"] }],
+  passwordIncorrect: [{ message: "پسورد اشتباه است", path: ["password"] }],
   duplicate: "اطلاعات وارد شده تکراری است",
   success: "درخواست شما با موفقیت انجام شد",
   error: "درخواست شما پاسخی ندارد",

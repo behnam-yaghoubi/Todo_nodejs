@@ -1,9 +1,14 @@
-import { User, Validate } from "../models/UserModel";
+import { User } from "../models/UserModel";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET, Msg } from "../config/constants";
-import { catchError, loginHandle, successHandle } from "../utils";
-
+import {
+  catchError,
+  loginHandle,
+  successHandle,
+  loginValidation,
+} from "../utils";
+import { loginValidate, Validate } from "../utils/joiValidate";
 export default {
   async registerController(req, res) {
     try {
@@ -33,6 +38,10 @@ export default {
   async loginController(req, res) {
     try {
       const { email, password } = req.body;
+      const { error } = loginValidate(req.body);
+      if (error) {
+        return loginValidation(res, 400, "error", "", error.details, "/login");
+      }
       const user = await User.findOne({
         where: {
           email,

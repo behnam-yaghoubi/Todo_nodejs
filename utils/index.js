@@ -20,3 +20,19 @@ export const successHandle = (res, statusCode, status, msg, result) => {
     result,
   });
 };
+
+export const loginValidation = (
+  res,
+  statusCode,
+  status,
+  token,
+  msg,
+  redirect
+) => {
+  res.status(statusCode).send({
+    status,
+    token,
+    msg,
+    redirect,
+  });
+};
