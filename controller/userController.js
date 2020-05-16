@@ -1,4 +1,4 @@
-import { User } from "../models/UserModel";
+import { User, Validate } from "../models/UserModel";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET, Msg } from "../config/constants";
@@ -8,13 +8,17 @@ export default {
   async registerController(req, res) {
     try {
       const { userName, email, password } = req.body;
+      const { error } = Validate(req.body);
+      if (error) {
+        return successHandle(res, 400, "error", error.details);
+      }
       const alreadyExistUser = await User.findOne({
         where: {
           email,
         },
       });
       if (alreadyExistUser) {
-        return successHandle(res, 401, "error", Msg.duplicate);
+        return successHandle(res, 400, "error", Msg.duplicate);
       }
       const result = await User.create({
         userName,
