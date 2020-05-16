@@ -1,4 +1,8 @@
 import Joi from "@hapi/joi";
+/**
+ * @function Validate-Register
+ * @param {Json} model req.body
+ */
 export const Validate = (model) => {
   const schema = Joi.object({
     userName: Joi.string().required().min(5).messages({
@@ -16,6 +20,11 @@ export const Validate = (model) => {
   }).options({ abortEarly: false });
   return schema.validate(model);
 };
+
+/**
+ * @function loginValidate
+ * @param  {JSON} model req.body
+ */
 export const loginValidate = (model) => {
   const schema = Joi.object()
     .keys({
@@ -32,6 +41,10 @@ export const loginValidate = (model) => {
   return schema.validate(model);
 };
 
+/**
+ * @function addTodo-validate
+ * @param  {JSON} model req.body
+ */
 export const addTodo = (model) => {
   const todo = Joi.object().keys({
     todoName: Joi.string()
@@ -46,6 +59,11 @@ export const addTodo = (model) => {
   });
   return todo.validate(model);
 };
+
+/**
+ * @function editTodo-Validate
+ * @param  {JSON} model req.body
+ */
 export const editTodo = (model) => {
   const todo = Joi.object().keys({
     id: Joi.number().required(),

@@ -1,5 +1,4 @@
-# behnam.yaghoubi
+behnam.yaghoubi
 
- 
-*  run command 
-       npm start
+run command
+npm start

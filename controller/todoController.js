@@ -4,6 +4,13 @@ import { addTodo, editTodo } from "../utils/joiValidate";
 import { Msg } from "../config/constants";
 
 export default {
+  /**
+   * @function Add Todo
+   * @param {Object} req The request.
+   * @param {Object} res The response.
+   * @param {Object} req.body The JSON payload.
+   * @param {String} todoName todo name.
+   */
   async addTodo(req, res) {
     try {
       const { todoName } = req.body;
@@ -27,6 +34,16 @@ export default {
       catchError(res, error);
     }
   },
+
+  /**
+   * @function Edit Todo
+   * @param {Object} req The request.
+   * @param {Object} res The response.
+   * @param {Object} req.body The JSON payload.
+   * @param {String} todoName Todo name.
+   * @param {String} Condition Todo condition.
+   * @param {Number} id Todo id.
+   */
   async editTodo(req, res) {
     try {
       const { id, todoName, Condition } = req.body;
@@ -49,6 +66,14 @@ export default {
       catchError(res, error);
     }
   },
+
+  /**
+   * @function Delete Todo
+   * @param {Object} req The request.
+   * @param {Object} res The response.
+   * @param {String} req.query The id query.
+   * @param {Number} id Todo id.
+   */
   async deleteTodo(req, res) {
     try {
       const { id } = req.query;
@@ -65,6 +90,14 @@ export default {
       catchError(res, error);
     }
   },
+
+  /**
+   * @function Get All Todo
+   * @param {Object} req The request.
+   * @param {Object} res The response.
+   * @param {Number} req.query The page query.
+   * @return {JSON}
+   */
   async getAllTodo(req, res) {
     try {
       const { page } = req.query;

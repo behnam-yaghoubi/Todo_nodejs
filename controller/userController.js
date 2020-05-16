@@ -10,6 +10,12 @@ import {
 } from "../utils";
 import { loginValidate, Validate } from "../utils/joiValidate";
 export default {
+  /**
+   * @function user register
+   * @param {Object} req The request.
+   * @param {Object} res The response.
+   * @param {Object} req.body The JSON payload.
+   */
   async registerController(req, res) {
     try {
       const { userName, email, password } = req.body;
@@ -35,6 +41,13 @@ export default {
       catchError(res, error);
     }
   },
+
+  /**
+   * @function user login
+   * @param {Object} req The request.
+   * @param {Object} res The response.
+   * @param {Object} req.body The JSON payload.
+   */
   async loginController(req, res) {
     try {
       const { email, password } = req.body;
