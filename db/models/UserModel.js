@@ -1,10 +1,10 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../config/database";
-import Joi from "@hapi/joi";
-const bcrypt = require("bcryptjs");
+import { sequelize } from ".";
+
+import bcrypt from "bcryptjs";
 
 export const User = sequelize.define(
-  "user",
+  "Users",
   {
     id: {
       // allowNull: false,

@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import logger from "morgan";
 import cookieParser from "cookie-parser";
 import passport from "passport";
-
+const port = 3000;
 import Router from "./routes/index"; // import master router
 
 const app = express();
@@ -16,8 +16,8 @@ app.use(passport.initialize());
 
 app.use("/", Router);
 
-app.listen(3000, function () {
-  console.log("listening on 3000");
-});
+app.listen(port, () =>
+  console.log(`Todo app listening at http://localhost:${port}`)
+);
 
 export default app;

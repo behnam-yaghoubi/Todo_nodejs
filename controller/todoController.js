@@ -1,4 +1,4 @@
-import { Todo } from "../models/TodoModel";
+import { Todo } from "../db/models/TodoModel";
 import { successHandle, catchError } from "../utils";
 import { addTodo, editTodo } from "../utils/joiValidate";
 import { Msg } from "../config/constants";
@@ -108,7 +108,6 @@ export default {
           userId: req.user.id,
         },
       });
-
       if (result.count === 0) {
         return successHandle(res, 200, "error", Msg.error, result);
       }
