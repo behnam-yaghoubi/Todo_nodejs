@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 const port = 3000;
 import Router from "./routes/index"; // import master router
-
+import Joi from "./middleware/joiValidate";
 const app = express();
 
 app.use(logger("dev"));

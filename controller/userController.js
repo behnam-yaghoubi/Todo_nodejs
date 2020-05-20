@@ -8,7 +8,7 @@ import {
   successHandle,
   loginValidation,
 } from "../utils";
-import { loginValidate, Validate } from "../utils/joiValidate";
+
 export default {
   /**
    * @function user register
@@ -19,11 +19,6 @@ export default {
   async registerController(req, res) {
     try {
       const { userName, email, password } = req.body;
-      const { error } = Validate(req.body);
-      if (error) {
-        return successHandle(res, 400, "error", error.details);
-      }
-
       const alreadyExistUser = await db.UserModel.findOne({
         where: {
           email,
@@ -52,10 +47,6 @@ export default {
   async loginController(req, res) {
     try {
       const { email, password } = req.body;
-      const { error } = loginValidate(req.body);
-      if (error) {
-        return loginValidation(res, 400, "error", "", error.details, "/login");
-      }
       const user = await db.UserModel.findOne({
         where: {
           email,

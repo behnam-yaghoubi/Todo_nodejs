@@ -1,6 +1,5 @@
 import db from "../db/models/";
 import { successHandle, catchError } from "../utils";
-import { addTodo, editTodo } from "../utils/joiValidate";
 import { Msg } from "../config/constants";
 
 export default {
@@ -13,24 +12,12 @@ export default {
    */
   async addTodo(req, res) {
     try {
-      console.log(req.user.id);
-
       const { todoName } = req.body;
       const { id } = req.user;
-      const { error } = addTodo(req.body);
-      if (error) {
-        return successHandle(res, 409, "error", error.details, {});
-      }
       const result = await db.TodoModel.create({
-        // where: {
         UserModelId: id,
         todoName,
-        // },
       });
-      // let find = result[0]._options.isNewRecord;
-      // if (!find) {
-      //   return successHandle(res, 409, "error", Msg.duplicate, {});
-      // }
       successHandle(res, 201, "success", Msg.success, result);
     } catch (error) {
       catchError(res, error);
@@ -49,10 +36,6 @@ export default {
   async editTodo(req, res) {
     try {
       const { id, todoName, Condition } = req.body;
-      const { error } = editTodo(req.body);
-      if (error) {
-        return successHandle(res, 400, "error", error.details, {});
-      }
       const [code, result] = await db.TodoModel.update(
         { todoName, Condition },
         {
