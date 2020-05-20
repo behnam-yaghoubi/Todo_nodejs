@@ -1,7 +1,7 @@
 import passport from "passport";
 // import LocalStrategy from "passport-local";
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
-import { User } from "../db/models/UserModel";
+import db from "../db/models/";
 import { JWT_SECRET } from "../config/constants";
 
 // const localStrategy = new LocalStrategy(async (username, password, done) => {
@@ -25,7 +25,7 @@ const JWTOpts = {
 
 const jwtStrategy = new JWTStrategy(JWTOpts, async (jwt_payload, done) => {
   try {
-    const user = await User.findOne({
+    const user = await db.UserModel.findOne({
       where: { email: jwt_payload.email },
     });
     return done(null, user);

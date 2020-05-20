@@ -1,4 +1,4 @@
-import { User } from "../db/models/UserModel";
+import db from "../db/models/";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET, Msg } from "../config/constants";
@@ -23,7 +23,8 @@ export default {
       if (error) {
         return successHandle(res, 400, "error", error.details);
       }
-      const alreadyExistUser = await User.findOne({
+
+      const alreadyExistUser = await db.UserModel.findOne({
         where: {
           email,
         },
@@ -31,7 +32,7 @@ export default {
       if (alreadyExistUser) {
         return successHandle(res, 400, "error", Msg.duplicate);
       }
-      const result = await User.create({
+      const result = await db.UserModel.create({
         userName,
         email,
         password,
@@ -55,7 +56,7 @@ export default {
       if (error) {
         return loginValidation(res, 400, "error", "", error.details, "/login");
       }
-      const user = await User.findOne({
+      const user = await db.UserModel.findOne({
         where: {
           email,
         },

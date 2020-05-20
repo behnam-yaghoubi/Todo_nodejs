@@ -1,11 +1,5 @@
 export const JWT_SECRET = "behnamBackendDeveloper";
-// export const DATABASE = {
-//   DB_NAME: "test",
-//   DB_USERNAME: "postgres",
-//   DB_PASSWORD: "behnam",
-//   DB_URL: "localhost",
-//   DB_DIALECT: "postgres",
-// };
+
 export const Msg = {
   Register: "ثبت نام شما با موفقیت انجام شد",
   loginUserNotFound: [
@@ -16,4 +10,12 @@ export const Msg = {
   duplicate: "اطلاعات وارد شده تکراری است",
   success: "درخواست شما با موفقیت انجام شد",
   error: "درخواست شما پاسخی ندارد",
+};
+export const dbMsgError = (name, length) => {
+  const msg = {
+    NotNullField: `فیلد ${name} نمی تواند خالی باشد`,
+    LessThan: `فیلد ${name} نیتواند کمتر از ${length} کاراکتر باشد`,
+    FormatValidation: `فرمت فیلد ${name} به درستی وارد نشده است`,
+  };
+  return msg;
 };

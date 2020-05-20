@@ -1,4 +1,4 @@
-import { Todo } from "../db/models/TodoModel";
+import db from "../db/models/";
 import { successHandle, catchError } from "../utils";
 import { addTodo, editTodo } from "../utils/joiValidate";
 import { Msg } from "../config/constants";
@@ -13,23 +13,25 @@ export default {
    */
   async addTodo(req, res) {
     try {
+      console.log(req.user.id);
+
       const { todoName } = req.body;
       const { id } = req.user;
       const { error } = addTodo(req.body);
       if (error) {
         return successHandle(res, 409, "error", error.details, {});
       }
-      const result = await Todo.findOrCreate({
-        where: {
-          todoName,
-          userId: id,
-        },
+      const result = await db.TodoModel.create({
+        // where: {
+        UserModelId: id,
+        todoName,
+        // },
       });
-      let find = result[0]._options.isNewRecord;
-      if (!find) {
-        return successHandle(res, 409, "error", Msg.duplicate, {});
-      }
-      successHandle(res, 201, "success", Msg.success, result[0]);
+      // let find = result[0]._options.isNewRecord;
+      // if (!find) {
+      //   return successHandle(res, 409, "error", Msg.duplicate, {});
+      // }
+      successHandle(res, 201, "success", Msg.success, result);
     } catch (error) {
       catchError(res, error);
     }
@@ -51,7 +53,7 @@ export default {
       if (error) {
         return successHandle(res, 400, "error", error.details, {});
       }
-      const [code, result] = await Todo.update(
+      const [code, result] = await db.TodoModel.update(
         { todoName, Condition },
         {
           where: { id },
@@ -77,7 +79,7 @@ export default {
   async deleteTodo(req, res) {
     try {
       const { id } = req.query;
-      const result = await Todo.destroy({
+      const result = await db.TodoModel.destroy({
         where: {
           id,
         },
@@ -101,12 +103,13 @@ export default {
   async getAllTodo(req, res) {
     try {
       const { page } = req.query;
-      const result = await Todo.findAndCountAll({
+      const result = await db.TodoModel.findAll({
         limit: 4,
         offset: (page - 1) * 4,
         where: {
-          userId: req.user.id,
+          UserModelId: req.user.id,
         },
+        include: [{ model: db.UserModel }],
       });
       if (result.count === 0) {
         return successHandle(res, 200, "error", Msg.error, result);
