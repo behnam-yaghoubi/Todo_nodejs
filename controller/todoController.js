@@ -92,7 +92,9 @@ export default {
         where: {
           UserModelId: req.user.id,
         },
-        include: [{ model: db.UserModel }],
+        include: [
+          { model: db.UserModel, attributes: ["id", "userName", "email"] },
+        ],
       });
       if (result.count === 0) {
         return successHandle(res, 200, "error", Msg.error, result);
