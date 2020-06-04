@@ -24,6 +24,8 @@ export default {
           email,
         },
       });
+      console.log("jadshflkajdhflajsd");
+      
       if (alreadyExistUser) {
         return successHandle(res, 400, "error", Msg.duplicate);
       }

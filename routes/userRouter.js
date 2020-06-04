@@ -4,6 +4,8 @@ import userController from "../controller/userController";
 import { RegisterValidate, LoginValidate } from "../middleware/joiValidate";
 
 router.post("/register", RegisterValidate, (req, res) => {
+  console.log('router');
+  
   userController.registerController(req, res);
 });
 
